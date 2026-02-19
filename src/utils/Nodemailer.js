@@ -44,3 +44,17 @@ export const sendRegistrationEmail = async (userEmail, name) => {
     const html = `<p>Hi ${name},</p><p>Thank you for registering with <strong>LedgerFlow</strong>. We're excited to have you on board!</p><p>Best regards,<br>The LedgerFlow Team</p>`;
     await sendEmail(userEmail, subject, text, html);
 }
+
+export const sendTransactionEmail = async (userEmail, name, amount, toAccount) => {
+  const subject = "Transaction Successful!";
+  const text = `Hi ${name},\n\nYour transaction of $${amount} to account ${toAccount} was successful.\n\nBest regards,\nThe LedgerFlow Team`;
+  const html = `<p>Hi ${name},</p><p>Your transaction of <strong>$${amount}</strong> to account <strong>${toAccount}</strong> was successful.</p><p>Best regards,<br>The LedgerFlow Team</p>`;
+  await sendEmail(userEmail, subject, text, html);
+}
+
+export const sendTransactionFailureEmail = async (userEmail, name, amount, toAccount) => {
+  const subject = "Transaction Failed!";
+  const text = `Hello ${name},\n\nWe regret to inform you that your transaction of $${amount} to account ${toAccount} has failed. Please try again later.\n\nBest regards,\nThe LedgerFlow Team`;
+  const html = `<p>Hi ${name},</p><p>We regret to inform you that your transaction of <strong>$${amount}</strong> to account <strong>${toAccount}</strong> has failed. Please try again later.</p><p>Best regards,<br>The LedgerFlow Team</p>`;
+  await sendEmail(userEmail, subject, text, html);
+}

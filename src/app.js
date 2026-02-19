@@ -15,7 +15,13 @@ app.use(cookieParser())
 
 //routes
 import authRouter from "./routes/auth.routes.js"
-
+import accountRouter from "./routes/account.routes.js"
+import transactionRouter from "./routes/transaction.routes.js"
+/**
+ * Use Routes
+ */
 app.use("/api/v1/auth",authRouter)
+app.use("/api/v1/account",accountRouter)
+app.use("/api/v1/transaction", transactionRouter)
 
 export { app }
