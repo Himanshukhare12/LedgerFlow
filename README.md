@@ -2,10 +2,13 @@
 
 A modern, scalable backend API for financial transaction management and ledger operations built with Node.js and Express.
 
+**Live Demo**: [https://ledgerflow-ifkh.onrender.com](https://ledgerflow-ifkh.onrender.com)
+
 ## 📋 Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
+- [Resume Highlights](#resume-highlights)
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
@@ -30,6 +33,12 @@ LedgerFlow is a comprehensive backend service designed for managing financial ac
 - **Email Notifications**: Automated email notifications using Nodemailer
 - **Token Management**: Implement token blacklist for logout functionality
 - **Request Validation**: Input validation and error handling throughout the application
+
+## 🏆 Resume Highlights
+
+- **Designed and implemented a scalable RESTful API** with Express.js following MVC architecture, handling multiple endpoints for authentication, account, and transaction management with proper separation of concerns
+- **Implemented robust security measures** including JWT-based authentication, bcrypt password hashing, token blacklisting for logout functionality, and secure cookie-based session management
+- **Developed comprehensive database schema** using MongoDB and Mongoose with 5 interconnected models (User, Account, Transaction, Ledger, TokenBlacklist) enabling efficient financial data management, integrated third-party services like Nodemailer for email notifications, custom error handling utilities, and async error wrapping for production-ready code quality
 
 ## 🛠️ Tech Stack
 
