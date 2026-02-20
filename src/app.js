@@ -14,7 +14,7 @@ app.use(cookieParser())
  * Welcome Route - Home endpoint
  */
 app.get("/", (req, res) => {
-    res.status(200).json({
+    res.send({
         message: "Welcome to LedgerFlow API",
         version: "1.0.0",
         description: "A modern financial transaction management system",
