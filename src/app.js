@@ -1,14 +1,8 @@
 import express from "express"
-import cors from "cors"
 import cookieParser from "cookie-parser"
 
 const app = express()
-
-app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
-}))
-
+//middlewares
 app.use(express.json({limit: "16kb"}))
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
@@ -17,6 +11,25 @@ app.use(cookieParser())
 import authRouter from "./routes/auth.routes.js"
 import accountRouter from "./routes/account.routes.js"
 import transactionRouter from "./routes/transaction.routes.js"
+
+/**
+ * Welcome Route - Home endpoint
+ */
+app.get("/", (req, res) => {
+    res.status(200).json({
+        message: "Welcome to LedgerFlow API",
+        version: "1.0.0",
+        description: "A modern financial transaction management system",
+        status: "Running",
+        availableRoutes: {
+            auth: "/api/v1/auth",
+            account: "/api/v1/account",
+            transaction: "/api/v1/transaction"
+        },
+        documentation: "Check the README.md for full API documentation"
+    })
+})
+
 /**
  * Use Routes
  */
