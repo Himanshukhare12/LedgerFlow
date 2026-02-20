@@ -1,16 +1,14 @@
 import express from "express"
 import cookieParser from "cookie-parser"
+import authRouter from "./routes/auth.routes.js"
+import accountRouter from "./routes/account.routes.js"
+import transactionRouter from "./routes/transaction.routes.js"
 
 const app = express()
 //middlewares
 app.use(express.json({limit: "16kb"}))
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
-
-//routes
-import authRouter from "./routes/auth.routes.js"
-import accountRouter from "./routes/account.routes.js"
-import transactionRouter from "./routes/transaction.routes.js"
 
 /**
  * Welcome Route - Home endpoint
