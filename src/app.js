@@ -14,18 +14,28 @@ app.use(cookieParser())
  * Welcome Route - Home endpoint
  */
 app.get("/", (req, res) => {
-    res.send({
-        message: "Welcome to LedgerFlow API",
-        version: "1.0.0",
-        description: "A modern financial transaction management system",
-        status: "Running",
-        availableRoutes: {
-            auth: "/api/v1/auth",
-            account: "/api/v1/account",
-            transaction: "/api/v1/transaction"
-        },
-        documentation: "Check the README.md for full API documentation"
-    })
+    try {
+        return res.status(200).json({
+            success: true,
+            message: "Welcome to LedgerFlow API",
+            version: "1.0.0",
+            description: "A modern financial transaction management system",
+            status: "Running",
+            availableRoutes: {
+                auth: "/api/v1/auth",
+                account: "/api/v1/account",
+                transaction: "/api/v1/transaction"
+            },
+            documentation: "Check the README.md for full API documentation",
+            timestamp: new Date().toISOString()
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: error.message
+        })
+    }
 })
 
 /**
@@ -34,5 +44,17 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth",authRouter)
 app.use("/api/v1/account",accountRouter)
 app.use("/api/v1/transaction", transactionRouter)
+
+/**
+ * 404 Handler - Catch all undefined routes
+ */
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: "Route not found",
+        path: req.originalUrl,
+        method: req.method
+    })
+})
 
 export { app }
