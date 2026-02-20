@@ -3,7 +3,7 @@ import { ApiError } from "../utils/ApiError.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { sendRegistrationEmail } from "../utils/Nodemailer.js"
-
+import { TokenBlacklist } from "../models/blackList.model.js"
 const generateAccessTokens = async(userId) => {
     try {
         const user = await User.findById(userId);
@@ -14,6 +14,10 @@ const generateAccessTokens = async(userId) => {
     }
 }
 
+/**
+ * - User Register Controller
+ * - POST /api/v1/auth/register
+ */
 
 const registerUser = asyncHandler(async (req, res)=>{
 
@@ -39,6 +43,11 @@ const registerUser = asyncHandler(async (req, res)=>{
     res.status(201).json(new ApiResponse(201, createdUser, "User registered successfully !!"))
     await sendRegistrationEmail(email, name)
 })
+
+/**
+ * - User Login Controller
+ * - POST /api/v1/auth/login
+ */
 
 const loginUser = asyncHandler(async(req, res) => {
     const {email, password} = req.body
@@ -68,4 +77,25 @@ const loginUser = asyncHandler(async(req, res) => {
     )
 })
 
-export { registerUser, loginUser }
+/**
+ * - User Logout Controller
+ * - POST /api/v1/auth/logout
+ */
+
+const logoutUser = asyncHandler(async(req,res)=>{
+    const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
+    if(!token)
+    throw new ApiError(400, "No token provided !!")
+
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+    res.clearCookie("accessToken", options)
+    await TokenBlacklist.create({
+        token
+    })
+    res.status(200).json(new ApiResponse(200, null, "User logged out successfully !!"))
+})
+
+export { registerUser, loginUser, logoutUser }

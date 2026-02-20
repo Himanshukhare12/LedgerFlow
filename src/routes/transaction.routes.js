@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { verifyJWT } from "../middlewares/auth.middleware.js";
-import { createTransaction } from "../controllers/transaction.controller.js";
+import { verifyJWT, verifySystemUser } from "../middlewares/auth.middleware.js";
+import { createInitialFunds, createTransaction } from "../controllers/transaction.controller.js";
 
 
 const router = Router();
@@ -12,5 +12,12 @@ const router = Router();
  */
 
 router.route("/").post(verifyJWT, createTransaction)
+
+/**
+ * Post /api/v1/transaction/system/initial-funds
+ * - Create initial funds for a user (System User)
+ */
+
+router.route("/system/initial-funds").post(verifySystemUser, createInitialFunds)
 
 export default router;
