@@ -15,7 +15,7 @@ app.use(cookieParser())
  */
 app.get("/", (req, res) => {
     try {
-        return res.status(200).json({
+        return res.send({
             success: true,
             message: "Welcome to LedgerFlow API",
             version: "1.0.0",
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
             timestamp: new Date().toISOString()
         })
     } catch (error) {
-        res.status(500).json({
+        res.status(500).send({
             success: false,
             message: "Internal server error",
             error: error.message
@@ -44,17 +44,5 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth",authRouter)
 app.use("/api/v1/account",accountRouter)
 app.use("/api/v1/transaction", transactionRouter)
-
-/**
- * 404 Handler - Catch all undefined routes
- */
-app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: "Route not found",
-        path: req.originalUrl,
-        method: req.method
-    })
-})
 
 export { app }
